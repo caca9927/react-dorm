@@ -1,0 +1,20 @@
+{
+
+    "Init PA Component": {
+        "scope": "javascript,typescript",
+        "prefix": "pa-component",
+        "body": [
+            "import React from 'react';",
+            "",
+            "const ${TM_FILENAME/(.*)\\..+$/$1/} = ({})=>{",
+            "\treturn (",
+            "\t\t<div></div>",
+            "\t)",
+            "};",
+            "",
+            "",
+            "export default ${TM_FILENAME/(.*)\\..+$/$1/}"
+        ],
+        "description": "Init Jss Style"
+    },
+}
