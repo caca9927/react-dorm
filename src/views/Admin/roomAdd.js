@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import axios from 'axios';
+import Header from './Header';
 
 export default class roomAdd extends Component{
 
@@ -48,6 +49,7 @@ export default class roomAdd extends Component{
     render() {
         return(
             <div>
+                <Header />
                 <Container style={styles.container}>
                 <h1 style={styles.h1}>เพิ่มรายการห้องพัก</h1>
                 <Row>

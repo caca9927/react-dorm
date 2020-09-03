@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import axios from 'axios';
+import Header from './Header';
 
-export default class roomAdd extends Component {
+export default class roomEdit extends Component {
 
     constructor(props) {
         super(props)
@@ -19,15 +20,16 @@ export default class roomAdd extends Component {
         }
     }
 
-    componentDidMount() {
-        axios.get(`http://127.0.0.1:4000/admin/room/` + this.props.match.params.id)
-            .then(res => {
-                console.log(res.data);
-              this.setState({
-                  id: res.data.id,
-                  room_price: res.data.room_price,
-                  room_status: res.data.room_status
-              });
+    async componentDidMount() {
+        await axios.get(`http://127.0.0.1:4000/admin/room/` + this.props.match.params.id)
+            .then(async res => {
+                console.log(res.data[0]);
+                await this.setState({
+                    id: res.data[0].id,
+                    room_price: res.data[0].room_price,
+                    room_status: res.data[0].room_status
+                });
+                
 
             })
             .catch((error) => {
@@ -56,6 +58,7 @@ export default class roomAdd extends Component {
         axios.put(`http://127.0.0.1:4000/admin/room/` + this.props.match.params.id, roomObject)
             .then(res => {
                 console.log(res.data)
+                window.location = 'http://localhost:3000/admin/room'
             })
 
     
@@ -63,14 +66,15 @@ export default class roomAdd extends Component {
     }
 
     render() {
+        
         return (
             <div>
+                <Header />
                 <Container style={styles.container}>
                     <h1 style={styles.h1}>เพิ่มรายการห้องพัก</h1>
                    
                             <Form style={styles.form} onSubmit={this.onSubmit}>
 
-                                
                                     <Form.Group as={Col} controlId="id" >
                                         <Form.Label>หมายเลขห้องพัก</Form.Label>
                                         <Form.Control type="text" value={this.state.id} disabled />

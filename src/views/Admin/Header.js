@@ -6,11 +6,10 @@ const Header = () => {
             <div>
                 <Navbar bg="primary" variant="dark" >
                     <Nav className="mr-auto" style={styles.a}>
-                        <Nav.Link href="/admin">หน้าหลัก</Nav.Link>
                         <Nav.Link href="/admin/room">ห้องพัก</Nav.Link>
                         <Nav.Link href="/admin/pay">ระบบคำนวณค่าเช่า</Nav.Link>
-                        <Nav.Link href="/admin/payList">รายการแจ้งชำระ</Nav.Link> 
-                        <Nav.Link href="/admin/logout">ออกจากระบบ</Nav.Link>  
+                        <Nav.Link href="/admin/payList">รายการค่าเช่ารายเดือน</Nav.Link> 
+                        <Nav.Link href="/logout">ออกจากระบบ</Nav.Link>  
                     </Nav>
                 </Navbar>
             </div>

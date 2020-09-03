@@ -1,57 +1,77 @@
-import React from 'react';
-import { Container,Table, Button } from 'react-bootstrap'
+import React, { Component } from 'react';
+import { Container, Table, Button, Image } from 'react-bootstrap'
+import check from '../../img/checked.png'
+import Header from './Header';
+import axios from 'axios';
 
-const payTable = ({})=>{
-    return (
-        <div>
-             <Container>
-                <h1 style={styles.h1}>รายการการแจ้งชำระเงิน</h1>
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th style={styles.th}>เลขห้องพัก</th>
-                            <th style={styles.th}>ค่าน้ำ</th>
-                            <th style={styles.th}>ค่าไฟ</th>
-                            <th style={styles.th}>ค่าห้อง</th>
-                            <th style={styles.th}>รวมค่าเช่า</th>
-                            <th style={styles.th}>สถานะการชำระเงิน</th>
-                            <th style={styles.th}>อนุมัติการชำระเงิน</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style={styles.td}>101</td>
-                            <td style={styles.td}>400</td>
-                            <td style={styles.td}>1200</td>
-                            <td style={styles.td}>2500</td>
-                            <td style={styles.td}>4100</td>
-                            <td style={styles.td}>ชำระแล้ว</td>
-                            <td style={styles.td}><Button variant="danger">อนุมัติ</Button></td>
-                        </tr>
-                        <tr>
-                            <td style={styles.td}>102</td>
-                            <td style={styles.td}>400</td>
-                            <td style={styles.td}>1200</td>
-                            <td style={styles.td}>2500</td>
-                            <td style={styles.td}>4100</td>
-                            <td style={styles.td}>ชำระแล้ว</td>
-                            <td style={styles.td}><Button variant="danger">อนุมัติ</Button></td>
-                        </tr>
-                        <tr>
-                            <td style={styles.td}>103</td>
-                            <td style={styles.td}>400</td>
-                            <td style={styles.td}>1200</td>
-                            <td style={styles.td}>2500</td>
-                            <td style={styles.td}>4100</td>
-                            <td style={styles.td}>ชำระแล้ว</td>
-                            <td style={styles.td}><Button variant="danger">อนุมัติ</Button></td>
-                        </tr>
-                    </tbody>
-                </Table>
-            </Container>
-        </div>
-    )
-};
+export default class payTable extends Component {
+
+    constructor(props) {
+        super(props)
+        this.deleteRent = this.deleteRent.bind(this);
+        this.state = {
+            rents: []
+        };
+       
+    }
+
+    deleteRent(e, id) {
+        e.preventDefault();
+        if (window.confirm('ยืนยันการลบ'))
+        axios.delete(`http://127.0.0.1:4000/admin/paylist/${id}`)
+            .then((res) => {
+                window.location = 'http://localhost:3000/admin/paylist'
+            }).catch((error) => {
+                console.log(error)
+            })
+    }
+    
+    componentDidMount() {
+        axios.get(`http://127.0.0.1:4000/admin/paylist`)
+            .then(res => {
+                const rents = res.data;
+                this.setState({ rents });
+                console.log(this.state.rents)
+            })
+    }
+
+    render() {
+        return (
+            <div>
+                <Header />
+                <Container>
+                    <h1 style={styles.h1}>รายการค่าเช่ารายเดือน</h1>
+                    <Table striped bordered hover>
+                        <thead>
+                            <tr>
+                                <th style={styles.th}>หมายเลขห้องพัก</th>
+                                <th style={styles.th}>รวมค่าเช่ารายเดือน</th>
+                                <th style={styles.th}>เดือน</th>
+                                <th style={styles.th}>สถานะการชำระเงิน</th>
+                                <th style={styles.th}>แก้ไข</th>
+                                <th style={styles.th}>ลบ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {this.state.rents.map((rent, index) =>
+                            <tr key={index}>
+                                <td style={styles.td}>{rent.id_room}</td>
+                                <td style={styles.td}>{rent.total_rent}</td>
+                                <td style={styles.td}>{rent.month}</td>
+                                <td style={styles.td}>{rent.status}</td>
+                                <td style={styles.td}>
+                                        <Button variant="info" href={"/admin/paylist/edit/" + rent.id_rent} >แก้ไข</Button>
+                                    </td>
+                                    <td style={styles.td}><Button variant="danger" onClick={(e) => this.deleteRent(e, rent.id_rent)} >ลบ</Button></td>
+                            </tr>
+                             )}
+                        </tbody>
+                    </Table>
+                </Container>
+            </div>
+        )
+    }
+}
 
 const styles = {
     n: {
@@ -70,4 +90,4 @@ const styles = {
     }
 }
 
-export default payTable
+

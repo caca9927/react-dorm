@@ -9,8 +9,12 @@ app.use(cors())
 app.use(bodyParser.urlencoded({extended: false}))
 
 var Admin = require('./api/admin')
+var User = require('./api/user')
 
-app.use('/admin', Admin)
+
+app.use('/user',User)
+app.use('/admin',Admin)
+
 
 
 app.listen(port, () => {

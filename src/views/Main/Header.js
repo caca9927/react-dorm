@@ -6,10 +6,8 @@ const Header = () => {
             <div>
                 <Navbar bg="primary" variant="dark" >
                     <Nav className="mr-auto" style={styles.a}>
-                        <Nav.Link href="/">หน้าหลัก</Nav.Link>
                         <Nav.Link href="/login">เข้าสู่ระบบ</Nav.Link>
                         <Nav.Link href="/signup">สมัครสมาชิก</Nav.Link>
-                        <Nav.Link href="/about">เกี่ยวกับ</Nav.Link>  
                     </Nav>
                 </Navbar>
             </div>
